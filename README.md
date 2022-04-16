@@ -13,13 +13,13 @@ Note: for all six algorithms, precision was virtually the same: a near perfect 1
 
 ### Oversampling
 
-* RandomOverSampler
+* **RandomOverSampler**
 
 ![RandomOverSampler](https://github.com/Jeffstr00/Credit_Risk_Analysis/blob/main/Resources/RandomOverSampling.png)
 
 With random oversampling, the algorithm attempts to make up for the gross imbalance between the two groups by adding instances of the minority class to the training set until the two are balanced.  In this case, the model had an unimpressive balanced accuracy score of 64%, with a sensitivity rate of 65%.
 
-* SMOTE
+* **SMOTE**
 
 ![SMOTE](https://github.com/Jeffstr00/Credit_Risk_Analysis/blob/main/Resources/SMOTE.png)
 
@@ -27,7 +27,7 @@ SMOTE oversampling also tries to deal with unbalanced datasets by increasing the
 
 ### Undersampling
 
-* RandomUnderSampler
+* **RandomUnderSampler**
 
 ![RandomUnderSampling](https://github.com/Jeffstr00/Credit_Risk_Analysis/blob/main/Resources/RandomUnderSampling.png)
 
@@ -35,21 +35,21 @@ Random under sampling is just like random over sampling, but in reverse.  Instea
 
 ### Combination
 
-* SMOTEENN
+* **SMOTEENN**
 
 ![SMOTEENN](https://github.com/Jeffstr00/Credit_Risk_Analysis/blob/main/Resources/SMOTEENN.png)
 
-SMOTEENN is an combined over/under sampling algorithm with two steps.  It first oversamples the minority class with SMOTE, then it undersamples the derived data by dropping data points whose two closest neighbors belong to seperate classes.  In this case, it improved the recall rate of high risk loans which rose to 71% at the expense of low_risk, which dropped to 59%.  Overall, its balanced accuracy score of 65% was the highest so far, albeit not by a large margin.
+SMOTEENN is an combined over/under sampling algorithm with two steps.  It first oversamples the minority class with SMOTE, then it undersamples the derived data by dropping data points whose two closest neighbors belong to seperate classes.  In this case, it improved the recall rate of high risk loans which rose to 71% at the expense of low risk loans, which dropped to 59%.  Overall, its balanced accuracy score of 65% was the highest so far, albeit not by a large margin.
 
 ### Bias Reduction
 
-* BalancedRandomForestClassifier
+* **BalancedRandomForestClassifier**
 
 ![BalancedRandomForest](https://github.com/Jeffstr00/Credit_Risk_Analysis/blob/main/Resources/BalancedRandomForest.png)
 
 BalancedRandomForestClassifier is a bias reduction algorithm that creates many small and simple decision trees.  While these trees are considered weak learners by themselves, when put together, many small decision trees can have incremental positive impacts that ultimately combine to form a strong learner.  Here, those incremental improvements did add up as we saw our highest balanced accuracy score so far at 79%.  While the sensitivity rate for high risk loans was in line with much of the others at 67%, that of the low risk loans was much higher at 91%.
 
-* EasyEnsembleClassifier
+* **EasyEnsembleClassifier**
 
 ![EasyEnsemble](https://github.com/Jeffstr00/Credit_Risk_Analysis/blob/main/Resources/EasyEnsemble.png)
 
@@ -57,6 +57,6 @@ Like RandomForest, EasyEnsemble is another bias reduction algorithm.  However, w
 
 ## Analysis
 
-In this case, it is abundantly clear which algorithm(s) produced the best results.  With all of the over and under sampling methods had balanced accuracy scores in (or just below) the 60's, both bias reduction methods were higher.  While BalancedRandomForest was a good 10 points higher at 79%, even that was clearly outclassed by the EasyEnsemble classifier and its 93% score.  While the huge low:high risk ratio led to every method having lopsided precision scores, even then, the bias reduction methods (especially EasyEnsemble) showed the best high risk precision.  When it came to sensitivity, which we are more concerned with, we saw the same thing.  Both random and under sampling produces scores in the 60's ballpark, SMOTEENN's combination method saw an improvement for high risk loans to 71% at the expense of that of low risk loans which fell to 59%, but the two bias reduction methods beat them all.  While BalancedRandomForest's high risk recall rate was similarly at 67%, its low risk score jumped all the way up to 91%.  However, EasyEnsemble reigned supreme on all accounts with its best across the boards scores of 91 and 94% for high and low risk respectively.
+In this case, it is abundantly clear which algorithm(s) produced the best results.  With all of the over and under sampling methods had balanced accuracy scores in (or just below) the 60's, both bias reduction methods were higher.  While BalancedRandomForest was a good 10 points higher at 79%, even that was clearly outclassed by the EasyEnsemble classifier and its 93% score.  While the huge low:high risk ratio led to every method having lopsided precision scores, even then, the bias reduction methods (especially EasyEnsemble) showed the best high risk precision.  When it came to sensitivity, which we are more concerned with, we saw the same thing.  Both random and under sampling produced scores in the 60's ballpark, SMOTEENN's combination method saw an improvement for high risk loans to 71% at the expense of that of low risk loans which fell to 59%, but the two bias reduction methods beat them all.  While BalancedRandomForest's high risk recall rate was similarly at 67%, its low risk score jumped all the way up to 91%.  However, EasyEnsemble reigned supreme on all accounts with its best across the boards scores of 91 and 94% for high and low risk respectively.
 
-Ultimately, there is no hard and fast rule deciding whether or not a particular algorithm should be used given its scores.  Virtually no test will be perfect, which means that some instances will inevitably be misclassified.  Each time this happens, the company will end up losing money.  However, with good tests, this should be minimized, and this was clearly the case with EasyEnsemble's bias reduction classifier.  It had the highest scores across the board, so it leaves no doubt as to which one should be used.  While the company ultimately has to decide whether or not those rates are acceptable, with a accuracy score of 93%, it seems rather unlikely EasyEnsemble's classifier didn't perform up to standards.
+Ultimately, there is no hard and fast rule deciding whether or not a particular algorithm should be used given its scores.  Virtually no test will be perfect, which means that some instances will inevitably be misclassified.  Each time this happens, the company will end up losing money.  However, with good tests, this should be minimized, and this was clearly the case with EasyEnsemble's bias reduction classifier.  It had the highest scores across the board, so it leaves no doubt as to which one should be used.  While the company ultimately has to decide whether or not those rates are acceptable, with a accuracy score of 93%, it seems rather unlikely EasyEnsemble's classifier didn't perform up to standards.  As a result, it should probably be used to increase speed, reliability and ultimately profitability when assessing credit risk.
